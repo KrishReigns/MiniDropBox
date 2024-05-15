@@ -1,0 +1,4 @@
+{%if session['role'] == 'user': %}
+{% include "user_head.html" %}
+{% endif %}
+<h1 class="text-center mt-5" style="color:black; font-family: cursive; font-size:50px;">{{message}}</h1>

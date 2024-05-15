@@ -1,0 +1,40 @@
+{% include "head.html" %}
+
+<div class="card">
+    <form  class="form" action="user_verify2" method="post">
+        <input type="hidden" name="email" value="{{email}}">
+        <h2 style="text-align:center">Email Verification</h2>
+        <div>
+            <input type="number" class="input" name="email_otp" placeholder="Enter OTP" required>
+        </div>
+        <div>
+            <input type="submit" value="Submit" style="background-color: black; color: white; padding: 10px 140px;border-radius:15px; margin-bottom:10px; margin-top:20px;">
+        </div>
+        <input type="number"  name="OTP" value="{{OTP}}">
+        <div>
+           Already have Account?
+            <a href="/">Click here to Login</a>
+        </div>
+        <h2 class="text-center mt-5" style="color:black; font-family: cursive; font-size:25px;">{{message}}</h2>
+    </form>
+</div>
+
+<style>
+    .card {
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.5);
+  border-radius: 25px;
+}
+    .form{
+    padding: 17px 45px;
+    text-align:center;
+    }
+
+    .input{
+    padding: 10px 80px;
+    margin: 13px;
+    border-radius: 15px;
+    }
+
+</style>

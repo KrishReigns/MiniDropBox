@@ -1,0 +1,116 @@
+/* General Styles */
+body, html {
+  padding: 0;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  color: #333;
+  background-color: #f4f4f4;
+}
+
+/* Container and Grid System */
+.container {
+  width: 90%;
+  margin: 20px auto;
+  max-width: 1200px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.col {
+  flex: 1; /* Expand to fill available space */
+  padding: 10px; /* Spacing between columns */
+}
+
+/* Navigation Bar */
+.navbar {
+  background-color: #333;
+  overflow: hidden;
+  color: white;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 20px;
+  text-decoration: none;
+}
+
+/* Footer */
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Form Elements */
+input[type="text"], input[type="email"], input[type="password"], select, textarea, button {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+/* Utility Classes */
+.text-center {
+  text-align: center;
+}
+
+/* Cards and Table Styles */
+.card, .card-style {
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 15px;
+  padding: 20px;
+  margin: 20px auto;
+  box-shadow: 0 14px 80px rgba(34, 35, 58, 0.5);
+  width: calc(100% - 40px); /* Adjust based on padding */
+}
+
+.table-style, .folder-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-style th, .table-style td, .folder-table th, .folder-table td {
+  border: 1px solid black;
+  padding: 10px 20px;
+}
+
+.action-link, .folder-action-link, .download-link {
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 15px;
+  background-color: white;
+  color: black;
+  display: block;
+}
+
+/* Images and Icons */
+.post-img {
+  width: 30px;
+  height: 30px;
+}

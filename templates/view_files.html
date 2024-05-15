@@ -1,0 +1,276 @@
+{% include "user_head.html" %}
+<style>
+    #view_type {
+        display:none;
+    }
+    #view_type ~ label {
+        display:block;
+        margin:1px solid lightgray;
+        padding:5px;
+        width:100px;
+        display:flex;
+    }
+    #view_type ~ label > .list {
+        background-color: white;
+    }
+    #view_type ~ label > .grid {
+        background-color: transparent;
+    }
+
+    #view_type:checked ~ label > .list {
+        background-color: transparent;
+    }
+
+    #view_type:checked ~ label > .grid {
+        background-color: white;
+    }
+
+    .list{
+        display:block;
+        width:50%;
+        text-align:center;
+    }
+    .grid{
+        display:block;
+        width:50%;
+        text-align:center;
+    }
+</style>
+<div class="row m-5">
+    {% if status == 'Uploaded': %}
+    <div class="col-md-9">
+    </div>
+    <div class="col-md-2">
+        <a style="color:black; background-color:white; text-decoration: None; padding: 10px 20px; font-size:23px; border-radius:25px;" href="/upload_file">Upload File</a>
+    </div>
+    {% endif %}
+    {% if status == 'Recycle Bin': %}
+    <div class="col-md-10">
+    </div>
+    {% endif %}
+    <div class="col-md-1">
+        {% if status == 'Uploaded': %}
+        <form action="view_files">
+        {% endif %}
+        {% if status == 'Recycle Bin': %}
+        <form action="view_recycle_bin">
+        {% endif %}
+            <input type="checkbox" name="view_type" id="view_type" {% if view_type == "grid_view" %} checked {% endif %}   onchange="this.form.submit()">
+            <label for="view_type">
+                <span class="list">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+                    </svg>
+                </span>
+                <span class="grid">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-grid-3x3-gap" viewBox="0 0 16 16">
+                      <path d="M4 2v2H2V2zm1 12v-2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1m0-5V7a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1m0-5V2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1m5 10v-2a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1m0-5V7a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1m0-5V2a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1M9 2v2H7V2zm5 0v2h-2V2zM4 7v2H2V7zm5 0v2H7V7zm5 0h-2v2h2zM4 12v2H2v-2zm5 0v2H7v-2zm5 0v2h-2v-2zM12 1a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zm-1 6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zm1 4a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1z"/>
+                    </svg>
+                </span>
+            </label>
+        </form>
+    </div>
+</div>
+
+{% if view_type == "list_view" %}
+    <div class="row m-2" id="list_view">
+        {% for file in files: %}
+        {% set folder = get_folder_by_folder_id(file[2]) %}
+        {% set user = get_user_by_user_id(folder[2]) %}
+        {% if file[3] == 'Recycle Bin': %}
+        {% set recycle_bin = get_recycle_bin_by_file_id(file[0]) %}
+        {% endif %}
+            <div class="col-md-3">
+                <div class="card" style="height:280px;">
+                    <div class="row">
+                        <div class="col-md-2">
+                            {% if file[4] in image_formats %}
+                                <div style="display: flex;">
+                                    <img class="post-img" src="../static/img.png" style="width:30px; height:30px;">
+                                </div>
+                                {% endif  %}
+                                {% if file[4] in video_formats %}
+                                <div style="display: flex;">
+                                    <img class="post-img" src="../static/video.png" style="width:30px; height:30px;">
+                                </div>
+                                {% endif  %}
+                                {% if file[4] in audio_formats %}
+                                <div style="display: flex;">
+                                    <img class="post-img" src="../static/music-file.png" style="width:30px; height:30px;">
+                                </div>
+                                {% endif  %}
+                                {% if file[4] in pdf_formats %}
+                                <div style="display: flex;">
+                                    <img class="post-img" src="../static/pdf.png" style="width:30px; height:30px;">
+                                </div>
+                            {% endif  %}
+                        </div>
+                        <div class="col-md-6">
+                            {{file[5]}}
+                        </div>
+                        {% if file[3] == 'Uploaded': %}
+                        <div class="col-md-4">
+                            <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="delete_file?file_id={{file[0]}}"><img class="post-img"  src="../static/bin.png" style="width:30px; height:30px;"></a>
+                        </div>
+                        {% endif %}
+                        {% if file[3] == 'Recycle Bin': %}
+                        <div class="col-md-4">
+                            <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="delete_file_from_bin?file_id={{file[0]}}"><img class="post-img"  src="../static/bin.png" style="width:30px; height:30px;"></a>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                       {% if file[4] in image_formats %}
+                            <img class="post-img" src="{{file[1]}}" style="width:200px; height:200px;">
+                        {% endif  %}
+                        {% if file[4] in video_formats %}
+                            <video class="post-img" controls style="width:300px; height:150px;">
+                                      <source src="{{file[1]}}" type="video/mp4" >
+                                      <source src="{{file[1]}}" type="video/ogg">
+                                      Your browser does not support the video tag.
+                            </video>
+                        {% endif  %}
+                        {% if file[4] in audio_formats %}
+                            <audio class="post-img" controls style="margin-top:70px;margin-bottom:60px;">
+                              <source src="{{file[1]}}" type="audio/ogg" style="width:300px; height:150px;">
+                              <source src="{{file[1]}}" type="audio/mpeg" style="width:300px; height:150px;">
+                              Your browser does not support the audio tag.
+                            </audio>
+                        {% endif  %}
+                        {% if file[4] in pdf_formats %}
+                        <object class="pdf" data="{{file[1]}}" style="width:300px; height:150px;"></object>
+                        {% endif  %}
+                    </div>
+                    <div class="row ">
+                        {% if file[3] == 'Uploaded': %}
+                            <div class="col-md-6 mt-3">
+                                <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="{{file[1]}}"><img class="post-img"  src="../static/downloads.png" style="width:30px; height:30px;"></a>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <a href="share?file_id={{file[0]}}"><img class="post-img"  src="../static/share.png" style="width:30px; height:30px;"></a>
+                            </div>
+                        {% endif %}
+                        {% if file[3] == 'Recycle Bin': %}
+                            <div class="col-md-4 mt-3" style="margin-left:0px;">
+                                <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="recover_file?file_id={{file[0]}}"><img class="post-img"  src="../static/recovery.png" style="width:30px; height:30px;"></a>
+                            </div>
+                            <div class="col-md-4">
+                                <div>Auto Deleted:</div>
+                                {{recycle_bin[1].strftime("%d-%m-%Y")}}
+                            </div>
+                            <div class="col-md-4">
+                                <div>Deleted On</div>
+                                {{recycle_bin[2].strftime("%d-%m-%Y")}}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div id="grid_view" style="background-color:white;">
+    <div class="row p-2">
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-2">
+            File Name
+        </div>
+        <div class="col-md-2">
+            Folder Name
+        </div>
+        <div class="col-md-2">
+            Created by
+        </div>
+        {% if status == 'Uploaded': %}
+        <div class="col-md-1" style="margin-left: 20px;">
+            Download
+        </div>
+        <div class="col-md-1">
+            Share
+        </div>
+        {% elif status == 'Recycle Bin': %}
+        <div class="col-md-1" style="margin-left:20px;">
+            Recover
+        </div>
+        <div class="col-md-1">
+            Deleted On
+        </div>
+        <div class="col-md-1">
+            Last Recovery Date
+        </div>
+        {% endif %}
+        <div class="col-md-1">
+            Action
+        </div>
+    </div>
+    <hr>
+    {% for file in files: %}
+    {% set folder = get_folder_by_folder_id(file[2]) %}
+    {% set user = get_user_by_user_id(folder[2]) %}
+    {% if file[3] == 'Recycle Bin': %}
+    {% set recycle_bin = get_recycle_bin_by_file_id(file[0]) %}
+    {% endif %}
+    <div class="row">
+        <div class="col-md-1">
+            {% if file[4] in image_formats %}
+            <div style="display: flex;">
+                <img class="post-img" src="../static/img.png" style="width:30px; height:30px;">
+            </div>
+            {% endif  %}
+            {% if file[4] in video_formats %}
+            <div style="display: flex;">
+                <img class="post-img" src="../static/video.png" style="width:30px; height:30px;">
+            </div>
+            {% endif  %}
+            {% if file[4] in audio_formats %}
+            <div style="display: flex;">
+                <img class="post-img" src="../static/music-file.png" style="width:30px; height:30px;">
+            </div>
+            {% endif  %}
+            {% if file[4] in pdf_formats %}
+            <div style="display: flex;">
+                <img class="post-img" src="../static/pdf.png" style="width:30px; height:30px;">
+            </div>
+            {% endif  %}
+        </div>
+        <div class="col-md-2">
+            {{file[5]}}
+        </div>
+        <div class="col-md-2">
+            {{folder[1]}}
+        </div>
+        <div class="col-md-2">
+            {{user[1]}}
+        </div>
+        {% if file[3] == 'Uploaded': %}
+        <div class="col-md-1">
+            <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="{{file[1]}}"><img class="post-img"  src="../static/downloads.png" style="width:30px; height:30px;"></a>
+        </div>
+        <div class="col-md-1">
+            <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="share?file_id={{file[0]}}"><img class="post-img"  src="../static/share.png" style="width:30px; height:30px;"></a>
+        </div>
+        <div class="col-md-1">
+            <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="delete_file?file_id={{file[0]}}"><img class="post-img"  src="../static/bin.png" style="width:30px; height:30px;"></a>
+        </div>
+        {% endif %}
+        {% if file[3] == 'Recycle Bin': %}
+        <div class="col-md-1">
+            <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="recover_file?file_id={{file[0]}}"><img class="post-img"  src="../static/recovery.png" style="width:30px; height:30px;"></a>
+        </div>
+        <div class="col-md-1">
+            {{recycle_bin[2].strftime("%d-%m-%Y")}}
+        </div>
+        <div class="col-md-1">
+            {{recycle_bin[1].strftime("%d-%m-%Y")}}
+        </div>
+        <div class="col-md-1">
+            <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="delete_file_from_bin?file_id={{file[0]}}"><img class="post-img"  src="../static/bin.png" style="width:30px; height:30px;"></a>
+        </div>
+        {% endif %}
+    </div>
+    <hr>
+    {% endfor %}
+</div>
+{% endif %}

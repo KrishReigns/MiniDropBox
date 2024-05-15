@@ -1,0 +1,62 @@
+{% include "user_head.html" %}
+<div style="background-color:white; margin:50px;">
+    <div class="row p-2">
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-2">
+            File Name
+        </div>
+        <div class="col-md-2">
+            Shared By
+        </div>
+        <div class="col-md-2">
+            Shared To
+        </div>
+        <div class="col-md-2">
+            Shared On
+        </div>
+        <div class="col-md-2" style="margin-left:25px;">
+            Download
+        </div>
+    </div>
+    <hr>
+    {% for share in shares: %}
+    {% set file = get_file_by_file_id(share[4]) %}
+    {% set folder = get_folder_by_folder_id(file[2]) %}
+    {% set shared_to = get_shared_to_by_user_id(share[3]) %}
+    {% set shared_by = get_shared_by_by_user_id(share[2]) %}
+    <div class="row">
+        <div class="col-md-1">
+            {% if file[4] in image_formats %}
+                <img class="post-img" src="../static/img.png" style="width:30px; height:30px;">
+            {% endif  %}
+            {% if file[4] in video_formats %}
+                <img class="post-img" src="../static/video.png" style="width:30px; height:30px;">
+            {% endif  %}
+            {% if file[4] in audio_formats %}
+                <img class="post-img" src="../static/music-file.png" style="width:30px; height:30px;">
+            {% endif  %}
+            {% if file[4] in pdf_formats %}
+                <img class="post-img" src="../static/pdf.png" style="width:30px; height:30px;">
+            {% endif  %}
+        </div>
+        <div class="col-md-2">
+            {{file[5]}}
+        </div>
+        <div class="col-md-2">
+            {{shared_by[1]}}
+        </div>
+        <div class="col-md-2">
+            {{shared_to[1]}}
+        </div>
+        <div class="col-md-2">
+            {{share[1]}}
+        </div>
+        <div class="col-md-2 ms-4">
+            <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="{{file[1]}}"><img class="post-img"  src="../static/downloads.png" style="width:30px; height:30px;"></a>
+        </div>
+    </div>
+    <hr>
+    {% endfor %}
+</div>

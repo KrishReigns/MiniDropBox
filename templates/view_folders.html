@@ -1,0 +1,41 @@
+{% include "user_head.html" %}
+<div class="row m-5">
+    <div class="col-md-9">
+    </div>
+    <div class="col-md-2">
+        <a style="color:black; background-color:white; text-decoration: None; padding: 10px 20px; font-size:23px; border-radius:25px;" href="/add_folder">Add Folder</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+
+    </div>
+    <div class="col-md-5">
+    <div style="background-color:white; border-radius:15px; border: 1px solid black; padding:30px; margin-top:20px; box-shadow: 0px 0px 10px;">
+    <div style="margin-left: 10px;">
+        <h2>Folders</h2>
+    </div>
+    <div>
+        <table style="border: 1px solid black; ">
+            <tr>
+                <th style="border: 1px solid black; padding:10px 20px;">Folder Id</th>
+                <th style="border: 1px solid black; padding:10px 20px;">Folder Name</th>
+                <th style="border: 1px solid black; padding:10px 20px;" >Created by</th>
+                <th style="border: 1px solid black; padding:10px 20px;">Action</th>
+            </tr>
+            {% for folder in folders: %}
+            {% set user = get_user_by_user_id(folder[2]) %}
+            <tr>
+                <td style="border: 1px solid black; padding:10px 20px;">{{folder[0]}}</td>
+                <td style="border: 1px solid black; padding:10px 20px;">{{folder[1]}}</td>
+                <td style="border: 1px solid black; padding:10px 20px;">{{user[1]}}</td>
+                <td style="border: 1px solid black; padding:10px 20px;">
+                    <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="delete_folder?folder_id={{folder[0]}}">Delete Folder</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+    </div>
+</div>

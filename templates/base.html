@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'head.html' %} <!-- Common head elements like CSS, JS, meta -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Your Site Name{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <!-- Dynamic Navigation Based on User Authentication -->
+            {% if 'user_id' in session %}
+                <a href="{{ url_for('user_home') }}" class="nav-link" aria-label="User Home">User Home</a>
+                <a href="{{ url_for('view_folders') }}" class="nav-link" aria-label="Folders">Folders</a>
+                <a href="{{ url_for('view_files') }}" class="nav-link" aria-label="Files">Files</a>
+                <a href="{{ url_for('shared_by_you') }}" class="nav-link" aria-label="Shared Files by You">Shared Files by You</a>
+                <a href="{{ url_for('shared_to_you') }}" class="nav-link" aria-label="Shared Files to You">Shared Files to You</a>
+                <a href="{{ url_for('view_recycle_bin') }}" class="nav-link" aria-label="Recycle Bin">Recycle Bin</a>
+                <a href="{{ url_for('logout') }}" class="nav-link" aria-label="Logout">Logout</a>
+            {% else %}
+                <a href="{{ url_for('user_login') }}" class="nav-link" aria-label="Login">Login</a>
+                <a href="{{ url_for('user_registration') }}" class="nav-link" aria-label="Register">Register</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main>
+        <!-- Flash Messages for User Feedback -->
+        <div class="container flash-messages">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <!-- Main Content Block -->
+        {% block content %}
+        <!-- Content overridden by child templates -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>Copyright © <script>document.write(new Date().getFullYear());</script></p>
+    </footer>
+
+    <!-- Scripts at the end of the body for better load performance -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}
+    <!-- Additional scripts specific to child templates -->
+    {% endblock %}
+</body>
+</html>

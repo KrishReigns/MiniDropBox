@@ -1,0 +1,26 @@
+{% include "user_head.html" %}
+
+<div class="row m-5">
+    <div class="col-md-4">
+
+    </div>
+    <div class="col-md-4">
+        <div style="background-color:white; border-radius:15px; border: 1px solid black; padding:30px; margin:30px; box-shadow: 0px 0px 10px;">
+            <div style="margin-left: 10px;">
+                <h2>Share File</h2>
+            </div>
+            <div>
+                <form action="share1">
+                    <input type="hidden" name="file_id" value="{{file_id}}">
+                    <div>
+                        <div style="font-weight:bold">Mail</div>
+                        <input type="email" name="email" id="email" style="width:250px; padding:7px 10px; border-radius:10px;" placeholder="Enter Mail Id" required>
+                    </div>
+                    <div style="margin-top: 15px; margin-left:60px;">
+                        <input type="submit" value="Share" style="padding:7px 40px; background-color:black; color: white; border-radius:10px;" required>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

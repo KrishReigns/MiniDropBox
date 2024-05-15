@@ -1,0 +1,87 @@
+{% include "head.html" %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+     $("#phone").on("change",function(){
+       let phone  = $("#phone").val();
+       if(phone.length!=10){
+        alert("10 Digit Required")
+       }
+
+     })
+    })
+
+</script>
+
+<script>
+        function validate() {
+            var password = document.getElementById('password').value;
+            document.getElementById('password_message').innerHTML = '';
+             var passw= /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+             if(!password.match(passw)) {
+               document.getElementById('password_message').innerHTML = 'Password must be 8 digits long. It must include a maximum of two numbers , Special Characters ';
+               return false;
+               }
+            return true;
+        }
+</script>
+
+<div class="card">
+    <form class="form"  action="user_registration1" method='post' Onsubmit=" return validate()">
+    <h3 style="text-align:center;">User Registration</h3>
+        <div class="mt-3">
+            <div class="label">
+                <label for="name">Name</label>
+            </div>
+            <input type="text" name="name" id="name" class="input" placeholder="Enter name" required>
+        </div>
+        <div>
+            <div class="label">
+                <label for="phone">Phone</label>
+            </div>
+            <input type="number" name="phone" title="Enter Valid Phone"  id="phone" style="width:320px;"  class="input" placeholder="Enter Phone">
+        </div>
+        <div>
+            <div class="label">
+                <label for="email">Email</label>
+            </div>
+            <input type="email" name="email" id="email" class="input" placeholder="Enter Email" required>
+        </div>
+        <div>
+            <div class="label">
+                <label for="password">Password</label>
+            </div>
+            <input type="password" name="password" class="input"  id="password"  placeholder="Enter Password" required>
+        </div>
+        <div style="text-align:center;">
+            <input type="submit" value="Register" style="background-color: black; color: white; padding: 10px 140px;border-radius:15px; margin-bottom:10px; margin-top:20px;">
+        </div>
+         <div class="label">
+           Already have Account?
+            <a href="/">Click here to Login</a>
+        </div>
+        <h2 class="text-center mt-5" style="color:black; font-family: cursive; font-size:25px;">{{message}}</h2>
+        <label id="password_message" class="message"></label>
+    </form>
+</div>
+
+<style>
+    .card {
+  border-radius: 4px;
+  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.5);
+  border-radius: 25px;
+}
+    .form{
+    padding: 17px 45px;
+      text-align:center;
+    }
+
+    .input{
+    padding: 10px 80px;
+    margin: 13px;
+    border-radius: 15px;
+    }
+    .label{
+    }
+
+</style>
