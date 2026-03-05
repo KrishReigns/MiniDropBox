@@ -1,6 +1,9 @@
 # MiniDropBox
 
-MiniDropBox is a simple user-friendly file sharing application. The application facilitates file upload, download, share, delete, recover and remote access. 
+MiniDropBox is a simple user-friendly file sharing application. The application facilitates file upload, download, share, delete, recover and remote access. Designed and deployed a cloud-based file storage application using Python Flask hosted on AWS EC2, storing uploaded files in Amazon S3 and managing user metadata in MySQL / Amazon RDS.
+
+<img width="1536" height="1024" alt="CloudArchitecture" src="https://github.com/user-attachments/assets/a6390873-6d4b-48a0-a2a2-5dcf5dcadc14" />
+
 
 ## Installation
 Python and Flask framework is used to develop this website with PyCharm IDE as an editor and MYSQL Workbench for backend. 
