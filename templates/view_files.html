@@ -110,57 +110,57 @@
                         </div>
                         {% if file[3] == 'Uploaded': %}
                         <div class="col-md-4">
-                            <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="delete_file?file_id={{file[0]}}"><img class="post-img"  src="../static/bin.png" style="width:30px; height:30px;"></a>
+                            <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="{{ url_for('delete_file', file_id=file[0]) }}"><img class="post-img"  src="../static/bin.png" style="width:30px; height:30px;"></a>
                         </div>
                         {% endif %}
                         {% if file[3] == 'Recycle Bin': %}
                         <div class="col-md-4">
-                            <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="delete_file_from_bin?file_id={{file[0]}}"><img class="post-img"  src="../static/bin.png" style="width:30px; height:30px;"></a>
+                            <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="{{ url_for('delete_file_from_bin', file_id=file[0]) }}"><img class="post-img"  src="../static/bin.png" style="width:30px; height:30px;"></a>
                         </div>
                         {% endif %}
                     </div>
                     <div class="row">
                        {% if file[4] in image_formats %}
-                            <img class="post-img" src="{{file[1]}}" style="width:200px; height:200px;">
+                            <img class="post-img" src="{{ file_url(file) }}" style="width:200px; height:200px;">
                         {% endif  %}
                         {% if file[4] in video_formats %}
                             <video class="post-img" controls style="width:300px; height:150px;">
-                                      <source src="{{file[1]}}" type="video/mp4" >
-                                      <source src="{{file[1]}}" type="video/ogg">
+                                      <source src="{{ file_url(file) }}" type="video/mp4" >
+                                      <source src="{{ file_url(file) }}" type="video/ogg">
                                       Your browser does not support the video tag.
                             </video>
                         {% endif  %}
                         {% if file[4] in audio_formats %}
                             <audio class="post-img" controls style="margin-top:70px;margin-bottom:60px;">
-                              <source src="{{file[1]}}" type="audio/ogg" style="width:300px; height:150px;">
-                              <source src="{{file[1]}}" type="audio/mpeg" style="width:300px; height:150px;">
+                              <source src="{{ file_url(file) }}" type="audio/ogg" style="width:300px; height:150px;">
+                              <source src="{{ file_url(file) }}" type="audio/mpeg" style="width:300px; height:150px;">
                               Your browser does not support the audio tag.
                             </audio>
                         {% endif  %}
                         {% if file[4] in pdf_formats %}
-                        <object class="pdf" data="{{file[1]}}" style="width:300px; height:150px;"></object>
+                        <object class="pdf" data="{{ file_url(file) }}" style="width:300px; height:150px;"></object>
                         {% endif  %}
                     </div>
                     <div class="row ">
                         {% if file[3] == 'Uploaded': %}
                             <div class="col-md-6 mt-3">
-                                <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="{{file[1]}}"><img class="post-img"  src="../static/downloads.png" style="width:30px; height:30px;"></a>
+                                <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="{{ url_for('download_file', file_id=file[0]) }}" target="_blank" rel="noopener noreferrer"><img class="post-img"  src="../static/downloads.png" style="width:30px; height:30px;"></a>
                             </div>
                             <div class="col-md-6 mt-3">
-                                <a href="share?file_id={{file[0]}}"><img class="post-img"  src="../static/share.png" style="width:30px; height:30px;"></a>
+                                <a href="{{ url_for('share', file_id=file[0]) }}"><img class="post-img"  src="../static/share.png" style="width:30px; height:30px;"></a>
                             </div>
                         {% endif %}
                         {% if file[3] == 'Recycle Bin': %}
                             <div class="col-md-4 mt-3" style="margin-left:0px;">
-                                <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="recover_file?file_id={{file[0]}}"><img class="post-img"  src="../static/recovery.png" style="width:30px; height:30px;"></a>
+                                <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="{{ url_for('recover_file', file_id=file[0]) }}"><img class="post-img"  src="../static/recovery.png" style="width:30px; height:30px;"></a>
                             </div>
                             <div class="col-md-4">
                                 <div>Auto Deleted:</div>
-                                {{recycle_bin[1].strftime("%d-%m-%Y")}}
+                                {{ recycle_bin[1].strftime("%d-%m-%Y") if recycle_bin[1] else 'N/A' }}
                             </div>
                             <div class="col-md-4">
                                 <div>Deleted On</div>
-                                {{recycle_bin[2].strftime("%d-%m-%Y")}}
+                                {{ recycle_bin[2].strftime("%d-%m-%Y") if recycle_bin[2] else 'N/A' }}
                             </div>
                         {% endif %}
                     </div>
@@ -246,18 +246,18 @@
         </div>
         {% if file[3] == 'Uploaded': %}
         <div class="col-md-1">
-            <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="{{file[1]}}"><img class="post-img"  src="../static/downloads.png" style="width:30px; height:30px;"></a>
+            <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="{{ url_for('download_file', file_id=file[0]) }}" target="_blank" rel="noopener noreferrer"><img class="post-img"  src="../static/downloads.png" style="width:30px; height:30px;"></a>
         </div>
         <div class="col-md-1">
-            <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="share?file_id={{file[0]}}"><img class="post-img"  src="../static/share.png" style="width:30px; height:30px;"></a>
+            <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="{{ url_for('share', file_id=file[0]) }}"><img class="post-img"  src="../static/share.png" style="width:30px; height:30px;"></a>
         </div>
         <div class="col-md-1">
-            <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="delete_file?file_id={{file[0]}}"><img class="post-img"  src="../static/bin.png" style="width:30px; height:30px;"></a>
+            <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="{{ url_for('delete_file', file_id=file[0]) }}"><img class="post-img"  src="../static/bin.png" style="width:30px; height:30px;"></a>
         </div>
         {% endif %}
         {% if file[3] == 'Recycle Bin': %}
         <div class="col-md-1">
-            <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="recover_file?file_id={{file[0]}}"><img class="post-img"  src="../static/recovery.png" style="width:30px; height:30px;"></a>
+            <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="{{ url_for('recover_file', file_id=file[0]) }}"><img class="post-img"  src="../static/recovery.png" style="width:30px; height:30px;"></a>
         </div>
         <div class="col-md-1">
             {{recycle_bin[2].strftime("%d-%m-%Y")}}
@@ -266,7 +266,7 @@
             {{recycle_bin[1].strftime("%d-%m-%Y")}}
         </div>
         <div class="col-md-1">
-            <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="delete_file_from_bin?file_id={{file[0]}}"><img class="post-img"  src="../static/bin.png" style="width:30px; height:30px;"></a>
+            <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="{{ url_for('delete_file_from_bin', file_id=file[0]) }}"><img class="post-img"  src="../static/bin.png" style="width:30px; height:30px;"></a>
         </div>
         {% endif %}
     </div>

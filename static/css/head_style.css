@@ -1,0 +1,54 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('https://img.freepik.com/premium-photo/businessman-holding-giving-virtual-cloud-icon-computing-with-copy-space-transfer-data-information-upload-download-application-technology-transformation-conceptbig-data-concept_35148-4176.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #111;
+}
+
+.card1 {
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 28px;
+  padding: 20px 24px;
+  background-color: rgba(255,255,255,0.92);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin: 36px auto;
+}
+
+.card1 a {
+  margin: 0;
+  text-decoration: none;
+  font-size: 18px;
+  color: #0f172a;
+  padding: 10px 18px;
+  border-radius: 16px;
+  background-color: #edf2ff;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.card1 a:hover {
+  transform: translateY(-2px);
+  background-color: #dbeafe;
+}
+
+.head-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.head-links a {
+  color: #111;
+}
+
+@media (max-width: 768px) {
+  .card1 {
+    width: 95%;
+  }
+}

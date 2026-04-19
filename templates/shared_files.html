@@ -54,7 +54,7 @@
             {{share[1]}}
         </div>
         <div class="col-md-2 ms-4">
-            <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="{{file[1]}}"><img class="post-img"  src="../static/downloads.png" style="width:30px; height:30px;"></a>
+            <a style="text-decoration: None; padding: 10px 20px; border-radius:15px;" href="{{ url_for('download_file', file_id=file[0]) }}" target="_blank" rel="noopener noreferrer"><img class="post-img"  src="../static/downloads.png" style="width:30px; height:30px;"></a>
         </div>
     </div>
     <hr>
